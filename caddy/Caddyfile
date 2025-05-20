@@ -1,0 +1,15 @@
+{$DOMAIN} {
+
+    handle_path /server/* {
+        reverse_proxy server:9000
+    }
+    
+    handle {
+        reverse_proxy web:8000
+    }
+
+    # Logging
+    log {
+        output stdout
+    }
+}

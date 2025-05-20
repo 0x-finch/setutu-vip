@@ -1,0 +1,51 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    container_name: server-app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+    networks:
+      - homework-network
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    container_name: web-app
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    networks:
+      - homework-network
+
+  caddy:
+    build:
+      context: .
+      dockerfile: caddy/Dockerfile
+    container_name: caddy-proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      - DOMAIN=${DOMAIN}
+    networks:
+      - homework-network # Caddy still needs the network to proxy to merkle-pay
+    volumes:
+      # Mount the built dashboard assets from the named volume (read-only)
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+    # Ensure dashboard build completes before Caddy starts
+    depends_on:
+      - web
+      - server
+
+networks:
+  homework-network:
+    driver: bridge

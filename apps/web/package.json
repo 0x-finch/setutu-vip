@@ -1,0 +1,35 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 8000",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@arco-design/web-react": "catalog:web",
+    "clsx": "catalog:web",
+    "date-fns": "catalog:web",
+    "next": "catalog:web",
+    "pg": "catalog:web",
+    "react": "catalog:web",
+    "react-dom": "catalog:web",
+    "tailwind-merge": "catalog:web",
+    "zod": "catalog:web",
+    "zod-validation-error": "catalog:web"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "catalog:web",
+    "@tailwindcss/postcss": "catalog:web",
+    "@types/node": "catalog:web",
+    "@types/react": "catalog:web",
+    "@types/react-dom": "catalog:web",
+    "eslint": "catalog:web",
+    "eslint-config-next": "catalog:web",
+    "tailwindcss": "catalog:web",
+    "tw-animate-css": "catalog:web",
+    "typescript": "catalog:web"
+  }
+}
