@@ -3,8 +3,10 @@ import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { pgClient } from "./plugins/pg-client";
 import { routes as publicRoutesV1 } from "./public-routes/v1";
 import { routes as protectedRoutesV1 } from "./protected-routes/v1";
+import { routes as apiRoutesV1 } from "./api-routes/v1";
 import cors from "@fastify/cors";
 import { bearerTokenGuard } from "./libs/bearer-token-guard";
+import { apiGuard } from "./libs/api-guard";
 
 const fastify = Fastify({
   logger: true,
@@ -25,6 +27,13 @@ fastify.register(protectedRoutesV1, {
   prefix: "/v1/protected",
   preHandler: {
     bearerTokenGuard,
+  },
+});
+
+fastify.register(apiRoutesV1, {
+  prefix: "/v1/api",
+  preHandler: {
+    apiGuard,
   },
 });
 
