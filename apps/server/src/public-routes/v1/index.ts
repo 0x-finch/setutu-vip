@@ -4,5 +4,10 @@ export const routes = async (
   fastify: FastifyInstance,
   options: FastifyPluginOptions
 ) => {
-  console.log("options", options);
+  fastify.post("/sign-in", async (req, res) => {
+    const { email, password } = req.body as {
+      email: string;
+      password: string;
+    };
+  });
 };

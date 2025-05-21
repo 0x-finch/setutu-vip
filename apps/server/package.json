@@ -17,7 +17,9 @@
     "fastify-plugin": "catalog:server",
     "@fastify/postgres": "catalog:server",
     "p-retry": "catalog:server",
-    "pg": "catalog:server"
+    "pg": "catalog:server",
+    "@fastify/cors": "catalog:server",
+    "jose": "catalog:server"
   },
   "devDependencies": {
     "nodemon": "catalog:server",
