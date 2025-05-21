@@ -1,11 +1,11 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import * as jose from "jose";
 
-export const apiGuard = async (req: FastifyRequest, res: FastifyReply) => {
+export const apiGuard = async (req: FastifyRequest, reply: FastifyReply) => {
   const token = req.headers["x-setutu-api-token"] as string;
 
   if (!token || !process.env.API_JWT_SECRET) {
-    res.send({
+    reply.send({
       code: 200,
       data: null,
       message: "Success",
@@ -17,7 +17,7 @@ export const apiGuard = async (req: FastifyRequest, res: FastifyReply) => {
     const secret = new TextEncoder().encode(process.env.API_JWT_SECRET);
     await jose.jwtVerify(token, secret);
   } catch (error) {
-    res.send({
+    reply.send({
       code: 200,
       data: null,
       message: "Success",
