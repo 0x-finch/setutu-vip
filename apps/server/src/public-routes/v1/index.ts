@@ -110,7 +110,7 @@ export const routes = async (
       }
 
       await pgConn.query(
-        "INSERT INTO api_service (email, password, created_at) VALUES ($1, $2, $3)",
+        "INSERT INTO api_service (email, password_hash, created_at) VALUES ($1, $2, $3)",
         [email, hash, new Date()]
       );
 
