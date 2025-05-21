@@ -160,7 +160,7 @@ export const routes = async (
 
     if (
       result.rows.length === 0 ||
-      !bcrypt.compareSync(password, result.rows[0].password)
+      !bcrypt.compareSync(password, result.rows[0].password_hash)
     ) {
       return {
         code: 400,
