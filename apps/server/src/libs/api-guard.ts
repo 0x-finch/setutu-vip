@@ -8,7 +8,7 @@ export const apiGuard = async (req: FastifyRequest, res: FastifyReply) => {
     res.send({
       code: 200,
       data: null,
-      message: "success",
+      message: "Success",
     });
     return;
   }
@@ -20,7 +20,7 @@ export const apiGuard = async (req: FastifyRequest, res: FastifyReply) => {
     res.send({
       code: 200,
       data: null,
-      message: "Unauthorized",
+      message: "Success",
     });
     return;
   }
