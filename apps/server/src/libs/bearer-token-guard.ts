@@ -22,7 +22,7 @@ export const bearerTokenGuard = async (
 
   try {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-    const token = bearerToken.split(" ")[1];
+    const token = bearerToken.slice(7);
     await jose.jwtVerify(token, secret);
   } catch (error) {
     res.send({
