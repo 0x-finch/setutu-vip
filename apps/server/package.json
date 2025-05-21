@@ -13,6 +13,7 @@
   "license": "MIT",
   "packageManager": "pnpm@10.6.4",
   "dependencies": {
+    "bcryptjs": "catalog:server",
     "fastify": "catalog:server",
     "fastify-plugin": "catalog:server",
     "@fastify/postgres": "catalog:server",

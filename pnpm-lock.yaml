@@ -21,6 +21,9 @@ catalogs:
     '@types/node':
       specifier: ^22
       version: 22.15.20
+    bcryptjs:
+      specifier: ^3
+      version: 3.0.2
     fastify:
       specifier: ^5.3.3
       version: 5.3.3
@@ -123,6 +126,9 @@ importers:
       '@fastify/postgres':
         specifier: catalog:server
         version: 6.0.2(pg@8.16.0)
+      bcryptjs:
+        specifier: catalog:server
+        version: 3.0.2
       fastify:
         specifier: catalog:server
         version: 5.3.3
@@ -952,6 +958,10 @@ packages:
 
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+
+  bcryptjs@3.0.2:
+    resolution: {integrity: sha512-k38b3XOZKv60C4E2hVsXTolJWfkGRMbILBIe2IBITXciy5bOsTKot5kDrf3ZfufQtQOUN5mXceUEpU1rTl9Uog==}
+    hasBin: true
 
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
@@ -3139,6 +3149,8 @@ snapshots:
   b-validate@1.5.3: {}
 
   balanced-match@1.0.2: {}
+
+  bcryptjs@3.0.2: {}
 
   binary-extensions@2.3.0: {}
 
