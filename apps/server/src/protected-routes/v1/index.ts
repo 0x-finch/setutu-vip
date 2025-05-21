@@ -1,4 +1,5 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify";
+import { nanoid } from "nanoid";
 
 export const routes = async (
   fastify: FastifyInstance,
@@ -32,8 +33,8 @@ export const routes = async (
 
       for (const imageUrl of imageUrlsArray) {
         await pgConn.query(
-          "INSERT INTO image (url, created_at, source) VALUES ($1, $2, $3)",
-          [imageUrl, new Date(), source]
+          "INSERT INTO image (url, created_at, source, sttid) VALUES ($1, $2, $3, $4)",
+          [imageUrl, new Date(), source, nanoid(32)]
         );
       }
 
