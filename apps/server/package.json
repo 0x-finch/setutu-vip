@@ -20,7 +20,8 @@
     "p-retry": "catalog:server",
     "pg": "catalog:server",
     "@fastify/cors": "catalog:server",
-    "jose": "catalog:server"
+    "jose": "catalog:server",
+    "nanoid": "catalog:server"
   },
   "devDependencies": {
     "nodemon": "catalog:server",
