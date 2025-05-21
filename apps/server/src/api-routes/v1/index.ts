@@ -46,7 +46,12 @@ export const routes = async (
       return {
         code: 200,
         data: {
-          images: randomImages,
+          images: randomImages.map(
+            (image: { id: number; url: string; sttid: string }) => ({
+              url: image.url,
+              sttid: image.sttid,
+            })
+          ),
         },
         message: "success",
       };
