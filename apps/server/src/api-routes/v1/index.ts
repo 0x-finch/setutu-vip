@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyPluginOptions } from "fastify";
-import { getRandomUniqueIntegers } from "src/libs/generate-random-integers";
+import { getRandomUniqueIntegers } from "../../libs/generate-random-integers";
 import rateLimit from "@fastify/rate-limit";
 
 export const routes = async (
