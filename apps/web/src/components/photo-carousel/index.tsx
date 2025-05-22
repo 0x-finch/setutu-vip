@@ -12,7 +12,7 @@ export const PhotoCarousel = ({
 }) => {
   return (
     <PhotoProvider>
-      <div className="grid grid-cols-2 grid-rows-6 gap-4 w-96 h-fit">
+      <div className="grid grid-cols-2 xl:grid-cols-4 grid-rows-10 xl:grid-rows-5 gap-4 w-96 xl:w-192 h-fit">
         {randomImages?.map((image: Image, index: number) => (
           <PhotoView key={index} src={image.url}>
             <NextImage
