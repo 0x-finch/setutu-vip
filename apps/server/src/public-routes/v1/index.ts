@@ -8,7 +8,7 @@ export const routes = async (
   fastify: FastifyInstance,
   options: FastifyPluginOptions
 ) => {
-  fastify.post("/sign-up", async (req, res) => {
+  fastify.post("/boss-sign-up", async (req, res) => {
     const { email, password } = req.body as {
       email: string;
       password: string;
@@ -34,10 +34,11 @@ export const routes = async (
     };
   });
 
-  fastify.post("/sign-in", async (req, res) => {
-    const { email, password } = req.body as {
+  fastify.post("/boss-sign-in", async (req, res) => {
+    const { email, password, days } = req.body as {
       email: string;
       password: string;
+      days?: string;
     };
 
     if (!process.env.BOSS_EMAIL || process.env.BOSS_EMAIL !== email) {
@@ -57,7 +58,7 @@ export const routes = async (
       };
     }
 
-    const jwt = await signJwt(email);
+    const jwt = await signJwt(email, days ?? "30d");
 
     return {
       code: 200,

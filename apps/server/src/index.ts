@@ -1,3 +1,5 @@
+/// <reference path="../types/index.d.ts" />
+
 import Fastify from "fastify";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { pgClient } from "./plugins/pg-client";
