@@ -1,4 +1,4 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
 import * as jose from "jose";
 
 export const apiGuard = async (req: FastifyRequest, reply: FastifyReply) => {
@@ -15,7 +15,11 @@ export const apiGuard = async (req: FastifyRequest, reply: FastifyReply) => {
 
   try {
     const secret = new TextEncoder().encode(process.env.API_JWT_SECRET);
-    await jose.jwtVerify(token, secret);
+    const { payload } = await jose.jwtVerify(token, secret);
+
+    req.api = {
+      email: payload.email as string,
+    };
   } catch (error) {
     reply.send({
       code: 200,
