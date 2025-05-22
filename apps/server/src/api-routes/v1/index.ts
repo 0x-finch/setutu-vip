@@ -27,17 +27,17 @@ export const routes = async (
   });
 
   fastify.get("/images", async (req, res) => {
-    const pgConn = await fastify.pg.connect();
+    const client = await fastify.pg.connect();
     try {
       // fetch total image count
-      const result = await pgConn.query("SELECT COUNT(*) FROM image");
+      const result = await client.query("SELECT COUNT(*) FROM image");
       const totalImageCount = parseInt(result.rows[0].count, 10);
 
       // random generate random 9 integers between 1 and total image count
       const randomIds = getRandomUniqueIntegers(9, totalImageCount);
       // !TODO: check redis cache first
 
-      const { rows: randomImages } = await pgConn.query(
+      const { rows: randomImages } = await client.query(
         `SELECT * FROM image WHERE id = ANY($1::int[])`,
         [randomIds]
       );
@@ -61,7 +61,7 @@ export const routes = async (
         message: `Internal server error: ${error}`,
       };
     } finally {
-      pgConn.release();
+      client.release();
     }
   });
 };
