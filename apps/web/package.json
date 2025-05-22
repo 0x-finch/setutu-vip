@@ -17,7 +17,8 @@
     "react-dom": "catalog:web",
     "tailwind-merge": "catalog:web",
     "zod": "catalog:web",
-    "zod-validation-error": "catalog:web"
+    "zod-validation-error": "catalog:web",
+    "react-photo-view": "catalog:web"
   },
   "devDependencies": {
     "@eslint/eslintrc": "catalog:web",
