@@ -16,12 +16,12 @@ export const pgQuery = async (query: string, params: unknown[]) => {
   return res;
 };
 
-export const pgQueryImages = async () => {
+export const pgQueryImages = async (count: number) => {
   try {
     const client = await pgClient();
     const result = await client.query("SELECT COUNT(*) FROM image");
     const totalImageCount = parseInt(result.rows[0].count, 10);
-    const randomIds = getRandomUniqueIntegers(9, totalImageCount);
+    const randomIds = getRandomUniqueIntegers(count, totalImageCount);
     const { rows: randomImages } = await client.query(
       `SELECT * FROM image WHERE id = ANY($1::int[])`,
       [randomIds]
