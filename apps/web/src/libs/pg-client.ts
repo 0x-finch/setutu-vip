@@ -9,7 +9,7 @@ export const pgClient = async () => {
   return client;
 };
 
-export const pgQuery = async (query: string, params: any[]) => {
+export const pgQuery = async (query: string, params: unknown[]) => {
   const client = await pgClient();
   const res = await client.query(query, params);
   client.release();
