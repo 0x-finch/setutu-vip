@@ -30,6 +30,7 @@
     "eslint-config-next": "catalog:web",
     "tailwindcss": "catalog:web",
     "tw-animate-css": "catalog:web",
-    "typescript": "catalog:web"
+    "typescript": "catalog:web",
+    "@types/pg": "catalog:web"
   }
 }
