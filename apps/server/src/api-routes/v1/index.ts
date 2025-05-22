@@ -5,14 +5,14 @@ export const routes = async (
   fastify: FastifyInstance,
   options: FastifyPluginOptions
 ) => {
+  fastify.decorateRequest("api", null);
   fastify.addHook("preHandler", options.preHandler.apiGuard);
   await fastify.register(rateLimit, {
     max: 5,
     timeWindow: "1 minute",
     ban: 3,
     keyGenerator: (req) => {
-      const token = req.headers["x-setutu-api-token"];
-      return typeof token === "string" ? token : req.ip;
+      return req.api?.email ?? "unauthenticated";
     },
     errorResponseBuilder: (req, context) => ({
       code: 429,
