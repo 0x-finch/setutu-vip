@@ -5,11 +5,7 @@ import "react-photo-view/dist/react-photo-view.css";
 import NextImage from "next/image";
 import { Image } from "src/types";
 
-export const PhotoCarousel = ({
-  randomImages,
-}: {
-  randomImages: Image[] | null;
-}) => {
+export const PhotoCarousel = ({ randomImages }: { randomImages?: Image[] }) => {
   return (
     <PhotoProvider>
       <div className="grid grid-cols-2 xl:grid-cols-4 grid-rows-10 xl:grid-rows-5 gap-4 w-96 xl:w-192 h-fit">
