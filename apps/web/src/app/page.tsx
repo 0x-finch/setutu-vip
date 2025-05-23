@@ -2,6 +2,8 @@ import { PhotoCarousel } from "src/components/photo-carousel";
 import { RotateButton } from "src/components/rotate-button";
 import { pgQueryImages } from "src/libs/pg-client";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const randomImages = await pgQueryImages(20);
   return (

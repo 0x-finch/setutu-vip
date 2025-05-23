@@ -36,5 +36,4 @@ export const pgQueryImages = async (count: number) => {
   } finally {
     client.release();
   }
-  return null;
 };
