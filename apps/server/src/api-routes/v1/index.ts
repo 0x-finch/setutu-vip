@@ -33,8 +33,8 @@ export const routes = async (
       const result = await client.query("SELECT COUNT(*) FROM image");
       const totalImageCount = parseInt(result.rows[0].count, 10);
 
-      // random generate random 9 integers between 1 and total image count
-      const randomIds = getRandomUniqueIntegers(9, totalImageCount);
+      // random generate random 20 integers between 1 and total image count
+      const randomIds = getRandomUniqueIntegers(20, totalImageCount);
       // !TODO: check redis cache first
 
       const { rows: randomImages } = await client.query(
