@@ -9,7 +9,7 @@ services:
       - NODE_ENV=production
       - DATABASE_URL=${DATABASE_URL}
     networks:
-      - homework-network
+      - setutu-network
 
   web:
     build:
@@ -20,7 +20,7 @@ services:
     environment:
       - NODE_ENV=production
     networks:
-      - homework-network
+      - setutu-network
 
   caddy:
     build:
@@ -35,7 +35,7 @@ services:
     environment:
       - DOMAIN=${DOMAIN}
     networks:
-      - homework-network # Caddy still needs the network to proxy to merkle-pay
+      - setutu-network # Caddy still needs the network to proxy to merkle-pay
     volumes:
       # Mount the built dashboard assets from the named volume (read-only)
       - ./caddy/data:/data
@@ -47,5 +47,5 @@ services:
       - server
 
 networks:
-  homework-network:
+  setutu-network:
     driver: bridge
