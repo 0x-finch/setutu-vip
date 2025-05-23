@@ -2,7 +2,6 @@
 
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
-import NextImage from "next/image";
 import { Image } from "src/types";
 
 export const PhotoCarousel = ({ randomImages }: { randomImages?: Image[] }) => {
@@ -11,7 +10,7 @@ export const PhotoCarousel = ({ randomImages }: { randomImages?: Image[] }) => {
       <div className="grid grid-cols-2 xl:grid-cols-4 grid-rows-10 xl:grid-rows-5 gap-4 w-96 xl:w-192 h-fit">
         {randomImages?.map((image: Image, index: number) => (
           <PhotoView key={index} src={image.url}>
-            <NextImage
+            <img
               key={index}
               src={image.url}
               alt={image.sttid}
