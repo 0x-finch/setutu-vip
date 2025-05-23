@@ -8,6 +8,9 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=${DATABASE_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - BOSS_EMAIL=${BOSS_EMAIL}
+      - API_JWT_SECRET=${API_JWT_SECRET}
     networks:
       - setutu-network
 
@@ -19,6 +22,7 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
     networks:
       - setutu-network
 
