@@ -49,6 +49,14 @@ export const routes = async (
       };
     }
 
+    const fileExists = fs.existsSync("boss.json");
+    if (!fileExists) {
+      return {
+        code: 400,
+        data: null,
+        message: "No boss account found",
+      };
+    }
     const user = JSON.parse(fs.readFileSync("boss.json", "utf8"));
     if (user.email !== email || !bcrypt.compareSync(password, user.password)) {
       return {
