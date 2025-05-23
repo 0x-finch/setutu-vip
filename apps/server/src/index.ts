@@ -16,6 +16,8 @@ const fastify = Fastify({
 
 fastify.register(cors, {
   origin: "*",
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 });
 
 fastify.register(pgClient);
