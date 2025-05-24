@@ -27,29 +27,11 @@ export const routes = async (
 
     const imageUrlsArray = Array.isArray(imageUrls) ? imageUrls : [imageUrls];
 
-    const pgConn = await fastify.pg.connect();
     const results: { sttid: string; url: string; error?: string }[] = [];
-    for (const imageUrl of imageUrlsArray) {
-      try {
-        const result = await pgConn.query(
-          "INSERT INTO image (url, created_at, source, sttid) VALUES ($1, $2, $3, $4) RETURNING *",
-          [imageUrl, new Date(), source, nanoid(32)]
-        );
 
-        results.push({
-          sttid: result.rows[0].sttid,
-          url: result.rows[0].url,
-        });
-      } catch (error) {
-        console.error(error);
-        results.push({
-          sttid: "",
-          url: imageUrl,
-          error: (error as Error).message,
-        });
-      } finally {
-        pgConn.release();
-      }
+    for (const imageUrl of imageUrlsArray) {
+      const result = await insertImage(fastify, imageUrl, source);
+      results.push(result);
     }
 
     const successCount = results.filter((result) => !!result.sttid).length;
@@ -64,4 +46,31 @@ export const routes = async (
           : `Images inserted failed: ${errorCount}`,
     };
   });
+};
+
+const insertImage = async (
+  fastify: FastifyInstance,
+  imageUrl: string,
+  source: string
+) => {
+  const pgConn = await fastify.pg.connect();
+  try {
+    const result = await pgConn.query(
+      "INSERT INTO image (url, created_at, source, sttid) VALUES ($1, $2, $3, $4) RETURNING *",
+      [imageUrl, new Date(), source, nanoid(32)]
+    );
+
+    return {
+      sttid: result.rows[0].sttid,
+      url: result.rows[0].url,
+    };
+  } catch (error) {
+    return {
+      sttid: "",
+      url: imageUrl,
+      error: (error as Error).message,
+    };
+  } finally {
+    pgConn.release();
+  }
 };
