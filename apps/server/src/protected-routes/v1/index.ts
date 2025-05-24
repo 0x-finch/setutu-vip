@@ -28,34 +28,33 @@ export const routes = async (
     const imageUrlsArray = Array.isArray(imageUrls) ? imageUrls : [imageUrls];
 
     const pgConn = await fastify.pg.connect();
-    try {
-      await pgConn.query("BEGIN");
-
-      for (const imageUrl of imageUrlsArray) {
-        await pgConn.query(
+    const results: { sttid: string; url: string }[] = [];
+    for (const imageUrl of imageUrlsArray) {
+      try {
+        const result = await pgConn.query(
           "INSERT INTO image (url, created_at, source, sttid) VALUES ($1, $2, $3, $4)",
           [imageUrl, new Date(), source, nanoid(32)]
         );
+
+        results.push({
+          sttid: result.rows[0].sttid,
+          url: result.rows[0].url,
+        });
+      } catch (error) {
+        console.error(error);
+        results.push({
+          sttid: "",
+          url: imageUrl,
+        });
+      } finally {
+        pgConn.release();
       }
-
-      await pgConn.query("COMMIT");
-
-      return {
-        code: 201,
-        data: {
-          success: true,
-        },
-        message: "Images inserted successfully",
-      };
-    } catch (error) {
-      await pgConn.query("ROLLBACK");
-      return {
-        code: 500,
-        data: null,
-        message: `Failed to insert images: ${(error as Error).message}`,
-      };
-    } finally {
-      pgConn.release();
     }
+
+    return {
+      code: 201,
+      data: results,
+      message: "Images inserted successfully",
+    };
   });
 };
