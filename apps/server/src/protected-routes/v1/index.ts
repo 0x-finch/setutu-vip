@@ -28,22 +28,22 @@ export const routes = async (
     const imageUrlsArray = Array.isArray(imageUrls) ? imageUrls : [imageUrls];
 
     const pgConn = await fastify.pg.connect();
-    const results: { success: boolean; url: string; error?: string }[] = [];
+    const results: { sttid: string; url: string; error?: string }[] = [];
     for (const imageUrl of imageUrlsArray) {
       try {
         const result = await pgConn.query(
-          "INSERT INTO image (url, created_at, source, sttid) VALUES ($1, $2, $3, $4)",
+          "INSERT INTO image (url, created_at, source, sttid) VALUES ($1, $2, $3, $4) RETURNING *",
           [imageUrl, new Date(), source, nanoid(32)]
         );
 
         results.push({
-          success: true,
+          sttid: result.rows[0].sttid,
           url: result.rows[0].url,
         });
       } catch (error) {
         console.error(error);
         results.push({
-          success: false,
+          sttid: "",
           url: imageUrl,
           error: (error as Error).message,
         });
@@ -52,7 +52,7 @@ export const routes = async (
       }
     }
 
-    const successCount = results.filter((result) => result.success).length;
+    const successCount = results.filter((result) => !!result.sttid).length;
     const errorCount = results.length - successCount;
 
     return {
