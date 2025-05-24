@@ -28,7 +28,7 @@ export const routes = async (
     const imageUrlsArray = Array.isArray(imageUrls) ? imageUrls : [imageUrls];
 
     const pgConn = await fastify.pg.connect();
-    const results: { sttid: string; url: string }[] = [];
+    const results: { success: boolean; url: string; error?: string }[] = [];
     for (const imageUrl of imageUrlsArray) {
       try {
         const result = await pgConn.query(
@@ -37,24 +37,31 @@ export const routes = async (
         );
 
         results.push({
-          sttid: result.rows[0].sttid,
+          success: true,
           url: result.rows[0].url,
         });
       } catch (error) {
         console.error(error);
         results.push({
-          sttid: "",
+          success: false,
           url: imageUrl,
+          error: (error as Error).message,
         });
       } finally {
         pgConn.release();
       }
     }
 
+    const successCount = results.filter((result) => result.success).length;
+    const errorCount = results.length - successCount;
+
     return {
-      code: 201,
+      code: successCount > 0 ? 201 : 500,
       data: results,
-      message: "Images inserted successfully",
+      message:
+        successCount > 0
+          ? `Images inserted successfully: ${successCount}`
+          : `Images inserted failed: ${errorCount}`,
     };
   });
 };
