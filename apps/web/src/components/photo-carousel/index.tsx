@@ -10,7 +10,14 @@ export const PhotoCarousel = ({ randomImages }: { randomImages?: Image[] }) => {
   const xlRows = Math.ceil(count / 4);
 
   return (
-    <PhotoProvider>
+    <PhotoProvider
+      brokenElement={
+        <div className="w-full h-full text-6xl text-white">404</div>
+      }
+      loadingElement={
+        <div className="w-full h-full text-6xl text-white">Loading...</div>
+      }
+    >
       <div
         className={`grid grid-cols-2 grid-rows-${rows} xl:grid-cols-4 xl:grid-rows-${xlRows} gap-4 w-96 xl:w-192 h-fit`}
       >
