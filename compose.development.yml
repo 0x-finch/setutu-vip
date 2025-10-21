@@ -1,0 +1,23 @@
+services:
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile.dev
+    container_name: web-app-dev
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - ./apps/web:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - setutu-network
+    command: npm run dev
+
+networks:
+  setutu-network:
+    driver: bridge

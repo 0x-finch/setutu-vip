@@ -24,11 +24,11 @@ export const pgQuery = async (query: string, params: unknown[]) => {
 export const pgQueryImages = async (count: number) => {
   const client = await pgClient();
   try {
-    const result = await client.query("SELECT COUNT(*) FROM image");
+    const result = await client.query("SELECT COUNT(*) FROM images");
     const totalImageCount = parseInt(result.rows[0].count, 10);
     const randomIds = getRandomUniqueIntegers(count, totalImageCount);
     const { rows: randomImages } = await client.query(
-      `SELECT * FROM image WHERE id = ANY($1::int[])`,
+      `SELECT * FROM images WHERE id = ANY($1::int[])`,
       [randomIds]
     );
 
@@ -38,7 +38,11 @@ export const pgQueryImages = async (count: number) => {
     }));
   } catch (error) {
     console.error("Database error:", error);
-    throw new Error(`Failed to fetch images: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    throw new Error(
+      `Failed to fetch images: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`
+    );
   } finally {
     client.release();
   }

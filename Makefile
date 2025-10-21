@@ -4,7 +4,7 @@ install:
 	cd apps/web && npm install
 
 dev:
-	docker compose up -d
+	docker compose -f compose.development.yml up -d
 
 build:
 	cd apps/web && npm run build
