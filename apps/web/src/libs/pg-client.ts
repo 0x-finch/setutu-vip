@@ -1,10 +1,15 @@
 import { Pool } from "pg";
 import { getRandomUniqueIntegers } from "./generate-random-integers";
 
+// Create a single pool instance to be reused
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  max: 20, // Maximum number of clients in the pool
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+});
+
 export const pgClient = async () => {
-  const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-  });
   const client = await pool.connect();
   return client;
 };
@@ -32,7 +37,8 @@ export const pgQueryImages = async (count: number) => {
       sttid: image.sttid,
     }));
   } catch (error) {
-    console.error(error);
+    console.error("Database error:", error);
+    throw new Error(`Failed to fetch images: ${error instanceof Error ? error.message : 'Unknown error'}`);
   } finally {
     client.release();
   }

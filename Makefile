@@ -4,7 +4,7 @@ install:
 	cd apps/web && npm install
 
 dev:
-	cd apps/web && npm run dev
+	docker compose up -d
 
 build:
 	cd apps/web && npm run build
