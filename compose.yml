@@ -1,19 +1,4 @@
 services:
-  server:
-    build:
-      context: .
-      dockerfile: apps/server/Dockerfile
-    container_name: server-app
-    restart: unless-stopped
-    environment:
-      - NODE_ENV=production
-      - DATABASE_URL=${DATABASE_URL}
-      - JWT_SECRET=${JWT_SECRET}
-      - BOSS_EMAIL=${BOSS_EMAIL}
-      - API_JWT_SECRET=${API_JWT_SECRET}
-    networks:
-      - setutu-network
-
   web:
     build:
       context: .
@@ -23,32 +8,10 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "127.0.0.1:3000:3000"
     networks:
       - setutu-network
-
-  caddy:
-    build:
-      context: .
-      dockerfile: caddy/Dockerfile
-    container_name: caddy-proxy
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"
-    environment:
-      - DOMAIN=${DOMAIN}
-    networks:
-      - setutu-network # Caddy still needs the network to proxy to merkle-pay
-    volumes:
-      # Mount the built dashboard assets from the named volume (read-only)
-      - ./caddy/data:/data
-      - ./caddy/config:/config
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
-    # Ensure dashboard build completes before Caddy starts
-    depends_on:
-      - web
-      - server
 
 networks:
   setutu-network:
