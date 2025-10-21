@@ -1,0 +1,8 @@
+setutu.vip, www.setutu.vip {
+    reverse_proxy localhost:3000
+
+    # Logging
+    log {
+        output stdout
+    }
+}
